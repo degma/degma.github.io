@@ -42,6 +42,9 @@
   .arow .none { color: #5c6f8c; }
   .emilia h2 { color: #ffd166; }
   .luca h2 { color: #7bdff2; }
+  .river { margin-top: 18px; }
+  .river h2 { color: #ff8fa3; }
+  .rscore { font-size: 34px; font-weight: 800; }
   footer { text-align: center; color: #6b7d99; font-size: 19px; margin-top: 20px; }
 </style>
 </head>
@@ -87,7 +90,15 @@
     <div class="arow"><span class="day">sáb 24</span><span class="none">—</span></div>
   </div>
 
-  <footer>Actualizado sáb 17 oct, 11:24 · se actualiza solo cada día</footer>
+  <div class="card river">
+    <h2>⚽ River Plate <span class="tag">Liga Profesional · Clausura</span></h2>
+    <div class="arow"><span class="day">mié 14</span><span class="rscore">Sarmiento 1 – 1 River</span>&nbsp;<span style="color:#9fb0c7;font-size:22px">Final</span></div>
+    <div class="arow"><span class="day">dom 18</span><span>19:15 · Belgrano vs River</span></div>
+    <div class="arow"><span class="day">dom 25</span><span>18:15 · River vs Racing · Monumental</span></div>
+    <div class="arow"><span class="day">dom 1 nov</span><span>13:00 · Boca vs River · Superclásico</span></div>
+  </div>
+
+  <footer>Actualizado sáb 17 oct, 14:09 · se actualiza solo cada día</footer>
 
 <script>
 function tick(){try{var d=new Date(),p=function(n){return String(n).padStart(2,'0')};document.getElementById('reloj').textContent=p(d.getHours())+':'+p(d.getMinutes());}catch(e){}}
