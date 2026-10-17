@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="refresh" content="600">
+<title>Tablón familiar</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #101828; color: #f5f7fa;
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    max-width: 720px; margin: 0 auto; padding: 28px 22px 40px;
+    line-height: 1.45;
+  }
+  header { text-align: center; margin-bottom: 26px; }
+  header h1 { font-size: 44px; margin-bottom: 6px; }
+  header p { font-size: 24px; color: #9fb0c7; }
+  .card {
+    background: #1b2740; border-radius: 20px;
+    padding: 22px 24px; margin-bottom: 20px;
+    border: 1px solid #2b3b5e;
+  }
+  .card h2 { font-size: 30px; margin-bottom: 14px; }
+  .card h2 .tag {
+    font-size: 18px; color: #9fb0c7; font-weight: normal; display: block; margin-top: 2px;
+  }
+  .item { font-size: 26px; padding: 10px 0; border-top: 1px solid #2b3b5e; }
+  .item:first-of-type { border-top: none; }
+  .item .day {
+    display: inline-block; background: #2f4a7d; border-radius: 10px;
+    font-size: 20px; padding: 3px 12px; margin-right: 10px; font-weight: bold;
+  }
+  .free { font-size: 28px; text-align: center; padding: 12px 0; }
+  footer { text-align: center; color: #6b7d99; font-size: 19px; margin-top: 28px; }
+  .emilia h2 { color: #ffd166; }
+  .luca h2 { color: #7bdff2; }
+  .manana h2 { color: #b8f2b8; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>🏠 Tablón familiar</h1>
+    <p>viernes 16 de octubre</p>
+  </header>
+
+  <div class="card manana">
+    <h2>📅 Mañana <span class="tag">sábado 17 de octubre</span></h2>
+    <div class="free">Sin eventos en el calendario.<br>¡Día libre! 🎉</div>
+  </div>
+
+  <div class="card emilia">
+    <h2>🌸 Emilia <span class="tag">JK B · Mrs. Hastings</span></h2>
+    <div class="item"><span class="day">mar 20</span>🍂 Spirit Day — ropa de colores otoñales (rojo, amarillo, naranja, marrón)</div>
+    <div class="item"><span class="day">mié 21</span>🚜 Excursión a Downey's Farm — almuerzo picnic + botella de agua; vestirse según el clima (sin uniforme)</div>
+    <div class="item"><span class="day">vie 23</span>📸 Picture Day — uniforme completo con medias; sin hoodies</div>
+  </div>
+
+  <div class="card luca">
+    <h2>🎒 Luca <span class="tag">6B · Mrs. Gannett</span></h2>
+    <div class="item"><span class="day">lun 19</span>📝 WOW words + prueba de Math U1 firmada + quiz de Social Studies</div>
+    <div class="item"><span class="day">mié 21</span>🎨 Póster del proyecto C.A.R.E. (salud)</div>
+    <div class="item"><span class="day">mar · jue</span>🎺 Llevar el instrumento de música</div>
+    <div class="item"><span class="day">todas las noches</span>🔌 Cargar el Chromebook</div>
+  </div>
+
+  <footer>Actualizado vie 16 oct, 22:35 · se actualiza solo cada día</footer>
+</body>
+</html>
