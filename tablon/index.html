@@ -11,12 +11,13 @@
   body {
     background: #101828; color: #f5f7fa;
     font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    padding: 30px 26px 24px; line-height: 1.4;
+    padding: 26px 26px 24px; line-height: 1.4;
     display: flex; flex-direction: column; min-height: 100vh;
   }
-  header { text-align: center; margin-bottom: 22px; }
-  header h1 { font-size: 46px; }
-  header p { font-size: 24px; color: #9fb0c7; margin-top: 4px; }
+  header { text-align: center; margin-bottom: 18px; }
+  .reloj { font-size: 76px; font-weight: 800; letter-spacing: 3px; line-height: 1.1; }
+  header h1 { font-size: 40px; margin-top: 2px; }
+  header p { font-size: 24px; color: #9fb0c7; margin-top: 2px; }
   .kids { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; flex: 1; }
   .card {
     background: #1b2740; border-radius: 20px;
@@ -42,8 +43,9 @@
 </head>
 <body>
   <header>
+    <div class="reloj" id="reloj">--:--</div>
     <h1>🏠 En casa</h1>
-    <p>viernes 16 de octubre</p>
+    <p>sábado 17 de octubre</p>
   </header>
 
   <div class="kids">
@@ -64,15 +66,20 @@
 
   <div class="card agenda">
     <h2>📅 Esta semana</h2>
-    <div class="arow"><span class="day">sáb 17</span><span class="none">—</span></div>
     <div class="arow"><span class="day">dom 18</span><span class="none">—</span></div>
-    <div class="arow"><span class="day">lun 19</span><span>17:00 · Luca Guitarra</span></div>
+    <div class="arow"><span class="day">lun 19</span><span>17:00 · Luca Guitarra<br>18:00 · Rosso Nero Practice</span></div>
     <div class="arow"><span class="day">mar 20</span><span>18:00 · Emilia – Gymnastics (Glen Abbey)</span></div>
-    <div class="arow"><span class="day">mié 21</span><span>19:30 · Small Group</span></div>
+    <div class="arow"><span class="day">mié 21</span><span>19:30 · Small Group - AthElite Lab</span></div>
     <div class="arow"><span class="day">jue 22</span><span class="none">—</span></div>
     <div class="arow"><span class="day">vie 23</span><span class="none">—</span></div>
+    <div class="arow"><span class="day">sáb 24</span><span class="none">—</span></div>
   </div>
 
-  <footer>Actualizado vie 16 oct, 23:05 · se actualiza solo cada día</footer>
+  <footer>Actualizado sáb 17 oct, 11:07 · se actualiza solo cada día</footer>
+
+<script>
+function tick(){try{var d=new Date(),p=function(n){return String(n).padStart(2,'0')};document.getElementById('reloj').textContent=p(d.getHours())+':'+p(d.getMinutes());}catch(e){}}
+tick();setInterval(tick,15000);
+</script>
 </body>
 </html>
