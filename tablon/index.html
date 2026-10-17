@@ -14,10 +14,14 @@
     padding: 26px 26px 24px; line-height: 1.4;
     display: flex; flex-direction: column; min-height: 100vh;
   }
-  header { text-align: center; margin-bottom: 18px; }
-  .reloj { font-size: 76px; font-weight: 800; letter-spacing: 3px; line-height: 1.1; }
-  header h1 { font-size: 40px; margin-top: 2px; }
-  header p { font-size: 24px; color: #9fb0c7; margin-top: 2px; }
+  .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .reloj { font-size: 72px; font-weight: 800; letter-spacing: 2px; line-height: 1; }
+  .fecha { font-size: 24px; color: #9fb0c7; margin-top: 2px; }
+  .weather { text-align: right; background: #1b2740; border: 1px solid #2b3b5e; border-radius: 18px; padding: 12px 22px; }
+  .w-main { font-size: 50px; font-weight: 800; line-height: 1.1; }
+  .w-desc { font-size: 24px; }
+  .w-range { font-size: 22px; color: #9fb0c7; }
+  .section-title { text-align: center; font-size: 36px; margin: 4px 0 16px; }
   .kids { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; flex: 1; }
   .card {
     background: #1b2740; border-radius: 20px;
@@ -42,11 +46,19 @@
 </style>
 </head>
 <body>
-  <header>
-    <div class="reloj" id="reloj">--:--</div>
-    <h1>🏠 En casa</h1>
-    <p>sábado 17 de octubre</p>
-  </header>
+  <div class="topbar">
+    <div>
+      <div class="reloj" id="reloj">--:--</div>
+      <div class="fecha">sábado 17 de octubre</div>
+    </div>
+    <div class="weather">
+      <div class="w-main"><span id="w-icon">⛅</span> <span id="w-temp">--°</span></div>
+      <div class="w-desc" id="w-desc">Cargando…</div>
+      <div class="w-range" id="w-range"></div>
+    </div>
+  </div>
+
+  <h2 class="section-title">📚 Classroom Connections</h2>
 
   <div class="kids">
     <div class="card emilia">
@@ -75,11 +87,25 @@
     <div class="arow"><span class="day">sáb 24</span><span class="none">—</span></div>
   </div>
 
-  <footer>Actualizado sáb 17 oct, 11:07 · se actualiza solo cada día</footer>
+  <footer>Actualizado sáb 17 oct, 11:24 · se actualiza solo cada día</footer>
 
 <script>
 function tick(){try{var d=new Date(),p=function(n){return String(n).padStart(2,'0')};document.getElementById('reloj').textContent=p(d.getHours())+':'+p(d.getMinutes());}catch(e){}}
 tick();setInterval(tick,15000);
+function clima(){
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=43.45&longitude=-79.68&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=America%2FToronto&forecast_days=1')
+  .then(function(r){return r.json();})
+  .then(function(d){
+    var map={0:['☀️','Despejado'],1:['🌤️','Mayormente despejado'],2:['⛅','Parcialmente nublado'],3:['☁️','Nublado'],45:['🌫️','Niebla'],48:['🌫️','Niebla'],51:['🌦️','Llovizna'],53:['🌦️','Llovizna'],55:['🌦️','Llovizna'],61:['🌧️','Lluvia'],63:['🌧️','Lluvia'],65:['🌧️','Lluvia fuerte'],71:['🌨️','Nieve'],73:['🌨️','Nieve'],75:['❄️','Nieve fuerte'],80:['🌦️','Chaparrones'],81:['🌦️','Chaparrones'],82:['🌧️','Chaparrones fuertes'],95:['⛈️','Tormenta']};
+    var m=map[d.current.weather_code]||['🌡️',''];
+    document.getElementById('w-icon').textContent=m[0];
+    document.getElementById('w-temp').textContent=Math.round(d.current.temperature_2m)+'°C';
+    document.getElementById('w-desc').textContent=m[1];
+    document.getElementById('w-range').textContent='Máx '+Math.round(d.daily.temperature_2m_max[0])+'° · Mín '+Math.round(d.daily.temperature_2m_min[0])+'°';
+  })
+  .catch(function(){document.getElementById('w-desc').textContent='Sin datos';});
+}
+clima();setInterval(clima,600000);
 </script>
 </body>
 </html>
