@@ -3,149 +3,334 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="refresh" content="600">
-<title>En casa</title>
+<title>Semana</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
   body {
     background: #101828; color: #f5f7fa;
     font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    padding: 26px 26px 24px; line-height: 1.4;
+    padding: 20px 22px; line-height: 1.35;
     display: flex; flex-direction: column; min-height: 100vh;
   }
-  .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-  .reloj { font-size: 72px; font-weight: 800; letter-spacing: 2px; line-height: 1; }
-  .fecha { font-size: 24px; color: #9fb0c7; margin-top: 2px; }
-  .weather { text-align: right; background: #1b2740; border: 1px solid #2b3b5e; border-radius: 18px; padding: 12px 22px; }
-  .w-main { font-size: 50px; font-weight: 800; line-height: 1.1; }
-  .w-desc { font-size: 24px; }
-  .w-range { font-size: 22px; color: #9fb0c7; }
-  .section-title { text-align: center; font-size: 36px; margin: 4px 0 16px; }
-  .kids { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; flex: 1; }
-  .card {
-    background: #1b2740; border-radius: 20px;
-    padding: 24px 22px; border: 1px solid #2b3b5e;
-  }
-  .card h2 { font-size: 33px; margin-bottom: 12px; }
-  .card h2 .tag { font-size: 19px; color: #9fb0c7; font-weight: normal; display: block; margin-top: 2px; }
-  .item { font-size: 27px; padding: 12px 0; border-top: 1px solid #2b3b5e; }
-  .item:first-of-type { border-top: none; }
-  .subhead { font-size: 21px; color: #9fb0c7; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin: 18px 0 0; }
-  .subhead:first-of-type { margin-top: 2px; }
-  .day {
-    display: inline-block; background: #2f4a7d; border-radius: 10px;
-    font-size: 21px; padding: 4px 12px; margin-right: 10px; font-weight: bold; white-space: nowrap;
-  }
-  .agenda { margin-top: 18px; }
-  .agenda h2 { color: #b8f2b8; }
-  .arow { font-size: 26px; padding: 9px 0; border-top: 1px solid #2b3b5e; display: flex; align-items: baseline; gap: 12px; }
-  .arow:first-of-type { border-top: none; }
-  .arow .none { color: #5c6f8c; }
-  .emilia h2 { color: #ffd166; }
-  .luca h2 { color: #7bdff2; }
-  .river { margin-top: 18px; }
-  .river h2 { color: #ff8fa3; }
-  .rscore { font-size: 34px; font-weight: 800; }
-  footer { text-align: center; color: #6b7d99; font-size: 19px; margin-top: 20px; }
+  .hd { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 12px; }
+  .reloj { font-size: 58px; font-weight: 800; letter-spacing: 2px; line-height: 1; }
+  .fecha { font-size: 20px; color: #9fb0c7; margin-top: 2px; }
+  .riverpill { background: #1b2740; border: 1px solid #2b3b5e; border-radius: 999px; padding: 8px 16px; font-size: 17px; color: #ffb3c6; }
+  .riverpill b { color: #ff8fa3; }
+  .wx { text-align: right; }
+  .wx .t { font-size: 36px; font-weight: 800; }
+  .wx .d { font-size: 16px; color: #9fb0c7; }
+  .wkbar { display: flex; justify-content: space-between; align-items: center; margin: 2px 0 10px; }
+  .wkbar .lbl { font-size: 22px; font-weight: 700; }
+  .nav { background: #1b2740; color: #f5f7fa; border: 1px solid #2b3b5e; border-radius: 10px; font-size: 22px; padding: 4px 16px; cursor: pointer; }
+  .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+  .col { background: #16213a; border: 1px solid #2b3b5e; border-radius: 14px; padding: 9px 8px; min-height: 190px; cursor: pointer; }
+  .col.today { border-color: #ffd166; box-shadow: 0 0 0 1px #ffd166 inset; }
+  .col.sel { border-color: #7bdff2; }
+  .col h3 { font-size: 13px; color: #9fb0c7; text-align: center; letter-spacing: .5px; }
+  .col h3 b { display: block; font-size: 21px; color: #f5f7fa; margin-top: 1px; }
+  .hoy { display: inline-block; background: #ffd166; color: #101828; font-size: 10px; font-weight: 800; border-radius: 6px; padding: 1px 6px; margin-top: 3px; }
+  .it { display: flex; gap: 6px; align-items: flex-start; border-radius: 10px; padding: 6px 7px; margin-top: 7px; border: 1px solid; font-size: 14px; }
+  .it svg { flex: 0 0 auto; margin-top: 1px; }
+  .it.emilia { background: rgba(255,143,171,.16); border-color: #ff8fab; }
+  .it.luca { background: rgba(123,223,242,.12); border-color: #3f7f96; }
+  .it.familia { background: rgba(150,230,160,.10); border-color: #4a7d55; }
+  .it.emilia .cap { font-size: 16px; font-weight: 700; }
+  .box { flex: 0 0 auto; width: 17px; height: 17px; border: 2px solid #9fb0c7; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; margin-top: 1px; background: transparent; cursor: pointer; }
+  .box.on { background: #57cc6e; border-color: #57cc6e; color: #fff; }
+  .done { opacity: .5; }
+  .done .txt { text-decoration: line-through; }
+  .libre { color: #5c6f8c; font-size: 13px; text-align: center; margin-top: 16px; }
+  .dd { margin-top: 14px; background: #1b2740; border: 1px solid #2b3b5e; border-radius: 16px; padding: 14px 18px; }
+  .dd h2 { font-size: 23px; display: flex; justify-content: space-between; align-items: center; }
+  .add { background: #2f4a7d; color: #fff; border: 1px solid #3f639f; border-radius: 10px; padding: 7px 14px; font-size: 16px; cursor: pointer; }
+  .row { display: flex; align-items: center; gap: 12px; padding: 11px 2px; border-top: 1px solid #2b3b5e; }
+  .row .box { width: 27px; height: 27px; border-radius: 7px; }
+  .row .txt { font-size: 20px; flex: 1; }
+  .row .sub { display: block; font-size: 14px; color: #9fb0c7; }
+  .mv { background: transparent; color: #7bdff2; border: 1px solid #3f7f96; border-radius: 9px; padding: 6px 11px; font-size: 14px; cursor: pointer; white-space: nowrap; }
+  .del { background: transparent; color: #ff8fa3; border: 1px solid #7d4453; border-radius: 9px; padding: 6px 10px; font-size: 14px; cursor: pointer; }
+  .pick { display: flex; gap: 7px; flex-wrap: wrap; padding: 2px 2px 12px 51px; }
+  .chip { background: #2f4a7d; color: #fff; border: 1px solid #3f639f; border-radius: 999px; padding: 6px 13px; font-size: 15px; cursor: pointer; }
+  .who { font-size: 11px; font-weight: 700; letter-spacing: .4px; padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
+  .who.emilia { background: #ff8fab; color: #3a1020; }
+  .who.luca { background: #7bdff2; color: #0d2b36; }
+  .who.familia { background: #96e6a0; color: #12351a; }
+  .form { border-top: 1px solid #2b3b5e; padding-top: 12px; margin-top: 4px; }
+  .form input[type=text] { width: 100%; background: #101828; color: #f5f7fa; border: 1px solid #2b3b5e; border-radius: 10px; font-size: 19px; padding: 10px 12px; }
+  .frow { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 10px; align-items: center; }
+  .frow .lbl2 { font-size: 14px; color: #9fb0c7; margin-right: 2px; }
+  .wchip { border: 1px solid #2b3b5e; background: #16213a; color: #f5f7fa; border-radius: 999px; padding: 6px 13px; font-size: 15px; cursor: pointer; }
+  .wchip.on-emilia { background: #ff8fab; color: #3a1020; border-color: #ff8fab; }
+  .wchip.on-luca { background: #7bdff2; color: #0d2b36; border-color: #7bdff2; }
+  .wchip.on-familia { background: #96e6a0; color: #12351a; border-color: #96e6a0; }
+  .ichip { border: 1px solid #2b3b5e; background: #16213a; color: #f5f7fa; border-radius: 10px; padding: 6px 8px; cursor: pointer; }
+  .ichip.on { border-color: #ffd166; background: #2b3b5e; }
+  svg.ic { stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  footer { text-align: center; color: #6b7d99; font-size: 14px; margin-top: 14px; }
 </style>
 </head>
 <body>
-  <div class="topbar">
+  <div class="hd">
     <div>
       <div class="reloj" id="reloj">--:--</div>
-      <div class="fecha">martes 20 de octubre</div>
+      <div class="fecha" id="fecha"></div>
     </div>
-    <div class="weather">
-      <div class="w-main"><span id="w-icon">⛅</span> <span id="w-temp">--°</span></div>
-      <div class="w-desc" id="w-desc">Cargando…</div>
-      <div class="w-range" id="w-range"></div>
-    </div>
-  </div>
-
-  <h2 class="section-title">📚 Classroom Connections</h2>
-
-  <div class="kids">
-    <div class="card emilia">
-      <h2>🌸 Emilia <span class="tag">JK B · Mrs. Hastings</span></h2>
-      <div class="subhead">Esta semana</div>
-<div class="item"><span class="day">mié 21</span>🚜 Field Trip a Downey's Farm — picnic lunch + botella de agua, vestir según el clima (sin uniforme)</div>
-<div class="item"><span class="day">vie 23</span>📸 Picture Day — uniforme completo incl. medias; no hoodies</div>
-<div class="subhead">Desafío de lectura</div>
-<div class="item">📚 Read-at-Home Challenge: leer la mayor cantidad de libros en el mes y colorear uno en la planilla por cada libro; al completarla, hay sorpresa</div>
-<div class="subhead">Downey's Farm — voluntarios</div>
-<div class="item">🍎 Para acompañar: email a Mrs. Hastings; costo $23 (e-transfer a avanniekerk@jkcs-oakville.ca) y Police Check + Child Welfare al día en la oficina</div>
-<div class="subhead">Qué estamos aprendiendo</div>
-<div class="item">🔤 Language Arts: letras Ii y Jj y sus sonidos</div>
-<div class="item">🔢 Math: contar de 10 en 10 y figuras 2D</div>
-<div class="item">📖 Bible: Abraham y Sarah — esperando la promesa</div>
-<div class="subhead">Celebration of Missions</div>
-<div class="item"><span class="day">mar 27</span>🎉 Celebration of Missions — sesión informativa este jue 22 en el primer recreo (Jr Gym). Los más chicos no arman stand, pero las familias están invitadas a venir con ellos</div>
-<div class="subhead">En familia</div>
-<div class="item">📖 Plan espiritual — Unidad 6: Jacob: leer la historia de Jacob y Esaú; actividad: pintar una piedra por persona como recordatorio de la fidelidad de Dios</div>
-<div class="subhead">Info importante</div>
-<div class="item">✉️ Ausencias: avisar a Mrs. Hastings (ahastings@jkcs-oakville.ca) y a la oficina (office@jkcs-oakville.ca)</div>
-<div class="item">🖼️ Family Tree: enviar una foto familiar 4x6 o digital para el display del aula</div>
-<div class="item">🏷️ Etiquetar todo: lonchera, zapatos y ropa (sobre todo hoodies)</div>
-<div class="item">🧸 Juguetes en casa, salvo días especiales</div>
-<div class="item">🕞 Salida de Kindergarten: 3:20 pm, con la tarjeta de nombre en la ventanilla del auto</div>
-<div class="item">🎂 Cumpleaños: free dress el día del cumple (o el viernes anterior si cae fin de semana)</div>
-    </div>
-    <div class="card luca">
-      <h2>🎒 Luca <span class="tag">6B · Mrs. Gannett</span></h2>
-      <div class="subhead">Avisos</div>
-<div class="item"><span class="day">mié 21</span>🏐 Prueba #2 de voleibol varones 7:25 am (gimnasio Jr) — chicas jue 22</div>
-<div class="item"><span class="day">mar 27</span>🎉 Celebration of Missions — sesión informativa jue 22 en el primer recreo (Jr Gym)</div>
-<div class="item">🎺 Honour Band: la audición se coordina con Miss Bond o Mr. Tan, antes de fin de octubre</div>
-<div class="subhead">Tareas y recordatorios</div>
-<div class="item">💻 Homeroom: cargar la Chromebook todas las noches</div>
-<div class="item"><span class="day">mié 21</span>📝 Health: Proyecto C.A.R.E. (poster) — vence mañana</div>
-<div class="item"><span class="day">jue 22</span>📝 Bible: Wisdom from Above Minibook — vence jueves; terminar en casa lo que falte</div>
-<div class="item">📖 Language Arts: si no hay tarea, leer mín. 15 min por noche. WOW words: civ = “citizen” (civilization, uncivil, civics) — usar 1 en una oración y deletrearla, antes del último día de la semana</div>
-<div class="item">🔢 Math: el material de la Unidad 1 se queda en casa; practicar las operaciones a diario</div>
-<div class="item"><span class="day">lun 26</span>📝 French: quiz de verbos en -er</div>
-<div class="item">🎵 Music: traer el instrumento los martes y jueves</div>
-<div class="item">📚 Library: los libros se prestan por hasta 2 semanas</div>
-<div class="subhead">El mes a la vista</div>
-<div class="item"><span class="day">vie 23</span>📸 Picture Day — uniforme completo; no hoodies</div>
-<div class="item"><span class="day">lun 26</span>🎉 Activity Chapel</div>
-<div class="item"><span class="day">jue 29</span>🚫 PD Day — sin clases</div>
-<div class="item"><span class="day">vie 30</span>🚫 PD Day — sin clases</div>
+    <div class="riverpill" id="river"></div>
+    <div class="wx">
+      <div class="t"><span id="w-icon">⛅</span> <span id="w-temp">--°</span></div>
+      <div class="d"><span id="w-desc">Cargando…</span> · <span id="w-range"></span></div>
     </div>
   </div>
 
-  <div class="card agenda">
-    <h2>📅 Esta semana</h2>
-    <div class="arow"><span class="day">mié 21</span><span>19:30 · Small Group - AthElite Lab</span></div>
-<div class="arow"><span class="day">jue 22</span><span>17:00 · Luca Guitarra</span></div>
-<div class="arow"><span class="day">vie 23</span><span>18:00 · Luca - Stella Rossa practice</span></div>
-<div class="arow"><span class="day">sáb 24</span><span class="none">—</span></div>
-<div class="arow"><span class="day">dom 25</span><span class="none">—</span></div>
-<div class="arow"><span class="day">lun 26</span><span>18:00 · Rosso Nero Practice</span></div>
-<div class="arow"><span class="day">mar 27</span><span>18:00 · Luca - Stella Rossa practice<br>18:00 · Emilia – Gymnastics (Glen Abbey)</span></div>
+  <div class="wkbar">
+    <button class="nav" id="prev">‹</button>
+    <div class="lbl" id="wklabel"></div>
+    <button class="nav" id="next">›</button>
   </div>
 
-  <div class="card river"><h2>⚽ River Plate <span class="tag">Liga Profesional · Clausura</span></h2><div class="arow"><span class="day">dom 18</span><span class="rscore">Belgrano 0 – 3 River</span>&nbsp;<span style="color:#9fb0c7;font-size:22px">Final</span></div><div class="arow"><span class="day">dom 25</span><span>18:15 · River vs Racing</span></div><div class="arow"><span class="day">dom 1</span><span>13:00 · Boca vs River (Superclásico)</span></div><div class="arow"><span class="day">dom 8</span><span>Aldosivi vs River · hora por confirmar</span></div></div>
+  <div class="grid" id="grid"></div>
+  <div class="dd" id="dd"></div>
 
-  <footer>Actualizado mar 20 oct, 16:25 · se actualiza solo cada día</footer>
+  <footer>Se actualiza solo cada día a las 16:00 · tus cambios quedan guardados en el Portal</footer>
 
 <script>
-function tick(){try{var d=new Date(),p=function(n){return String(n).padStart(2,'0')};document.getElementById('reloj').textContent=p(d.getHours())+':'+p(d.getMinutes());}catch(e){}}
-tick();setInterval(tick,15000);
-function clima(){
-  fetch('https://api.open-meteo.com/v1/forecast?latitude=43.45&longitude=-79.68&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=America%2FToronto&forecast_days=1')
-  .then(function(r){return r.json();})
-  .then(function(d){
-    var map={0:['☀️','Despejado'],1:['🌤️','Mayormente despejado'],2:['⛅','Parcialmente nublado'],3:['☁️','Nublado'],45:['🌫️','Niebla'],48:['🌫️','Niebla'],51:['🌦️','Llovizna'],53:['🌦️','Llovizna'],55:['🌦️','Llovizna'],61:['🌧️','Lluvia'],63:['🌧️','Lluvia'],65:['🌧️','Lluvia fuerte'],71:['🌨️','Nieve'],73:['🌨️','Nieve'],75:['❄️','Nieve fuerte'],80:['🌦️','Chaparrones'],81:['🌦️','Chaparrones'],82:['🌧️','Chaparrones fuertes'],95:['⛈️','Tormenta']};
-    var m=map[d.current.weather_code]||['🌡️',''];
-    document.getElementById('w-icon').textContent=m[0];
-    document.getElementById('w-temp').textContent=Math.round(d.current.temperature_2m)+'°C';
-    document.getElementById('w-desc').textContent=m[1];
-    document.getElementById('w-range').textContent='Máx '+Math.round(d.daily.temperature_2m_max[0])+'° · Mín '+Math.round(d.daily.temperature_2m_min[0])+'°';
-  })
-  .catch(function(){document.getElementById('w-desc').textContent='Sin datos';});
+var GENERATED = "2026-10-20T21:23:06";
+var DATA = {"items": [{"d": "2026-10-19", "w": "luca", "i": "book", "t": "WOW words + Math U1 firmada + quiz de Social Studies"}, {"d": "2026-10-19", "w": "luca", "i": "music", "t": "17:00 · Guitarra"}, {"d": "2026-10-19", "w": "familia", "i": "ball", "t": "18:00 · Rosso Nero Practice"}, {"d": "2026-10-20", "w": "emilia", "i": "leaf", "s": "¡Otoño!", "t": "Spirit Day — ropa de colores de otoño"}, {"d": "2026-10-20", "w": "luca", "i": "leaf", "t": "Spirit Day"}, {"d": "2026-10-20", "w": "luca", "i": "music", "t": "Llevar instrumento"}, {"d": "2026-10-20", "w": "luca", "i": "ball", "t": "18:00 · Práctica Stella Rossa"}, {"d": "2026-10-20", "w": "emilia", "i": "rings", "s": "¡Gimnasia!", "t": "18:00 · Gimnasia (Glen Abbey)"}, {"d": "2026-10-21", "w": "emilia", "i": "barn", "s": "¡La granja!", "t": "Excursión a Downey's Farm", "u": "Picnic + botella de agua · sin uniforme"}, {"d": "2026-10-21", "w": "luca", "i": "image", "t": "Póster C.A.R.E."}, {"d": "2026-10-21", "w": "luca", "i": "ball", "t": "Prueba de vóley"}, {"d": "2026-10-21", "w": "familia", "i": "people", "t": "19:30 · Small Group – AthElite Lab"}, {"d": "2026-10-22", "w": "luca", "i": "music", "t": "Llevar instrumento"}, {"d": "2026-10-22", "w": "luca", "i": "music", "t": "17:00 · Guitarra"}, {"d": "2026-10-23", "w": "emilia", "i": "camera", "s": "¡Foto!", "t": "Picture Day", "u": "Uniforme completo · sin hoodies"}, {"d": "2026-10-23", "w": "luca", "i": "camera", "t": "Picture Day"}, {"d": "2026-10-23", "w": "luca", "i": "ball", "t": "18:00 · Práctica Stella Rossa"}, {"d": "2026-10-25", "w": "familia", "i": "ball", "t": "18:15 · River – Racing"}, {"d": "2026-10-26", "w": "familia", "i": "ball", "t": "18:00 · Rosso Nero Practice"}, {"d": "2026-10-27", "w": "luca", "i": "music", "t": "Llevar instrumento"}, {"d": "2026-10-27", "w": "luca", "i": "ball", "t": "18:00 · Práctica Stella Rossa"}, {"d": "2026-10-27", "w": "emilia", "i": "rings", "s": "¡Gimnasia!", "t": "18:00 · Gimnasia (Glen Abbey)"}, {"d": "2026-10-28", "w": "familia", "i": "people", "t": "19:30 · Small Group – AthElite Lab"}, {"d": "2026-10-29", "w": "luca", "i": "music", "t": "Llevar instrumento"}, {"d": "2026-11-01", "w": "familia", "i": "ball", "t": "13:00 · Boca – River · Superclásico"}], "river": {"last": "Belgrano 0–3 River", "next": "dom 25 · River vs Racing · 18:15"}};
+
+var ICONS = {
+  leaf: '<path d="M5 19C5 9 13 4 20 4c0 7-5 15-15 15Zm0 0c3-6 7-10 11-12"/>',
+  camera: '<rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 7l1.5-2.5h5L16 7"/>',
+  barn: '<path d="M3 21V11l9-7 9 7v10"/><path d="M10 21v-6h4v6"/>',
+  music: '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',
+  book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/>',
+  ball: '<circle cx="12" cy="12" r="9"/><path d="M12 7l3 2.2-1.1 3.6h-3.8L9 9.2zM12 3v4M20.5 9.5 15 9.2M18 19.5l-4.2-6.7M6 19.5l4.2-6.7M3.5 9.5 9 9.2"/>',
+  people: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>',
+  rings: '<path d="M7 2v7M17 2v7"/><circle cx="7" cy="13" r="3.5"/><circle cx="17" cy="13" r="3.5"/>',
+  image: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/>',
+  shirt: '<path d="M4 5l5-2.5C9.7 3.6 10.8 4 12 4s2.3-.4 3-1.5L20 5l-2 4.5L16 8v12H8V8L6 9.5z"/>',
+  note: '<path d="M5 4h14M5 9h14M5 14h9"/>',
+  bus: '<rect x="4" y="3" width="16" height="14" rx="2"/><path d="M4 10h16"/><path d="M8 21l1-4M16 21l-1-4"/><circle cx="8.5" cy="13.5" r=".5"/><circle cx="15.5" cy="13.5" r=".5"/>',
+  check: '<path d="M4 12.5l5 5L20 6.5"/>'
+};
+function ic(n, s) { return '<svg class="ic" width="' + s + '" height="' + s + '" viewBox="0 0 24 24">' + (ICONS[n] || ICONS.note) + '</svg>'; }
+
+var DOW = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+var DOWS = ['DOM','LUN','MAR','MIÉ','JUE','VIE','SÁB'];
+var MON = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+var WHO_LBL = { emilia: 'EMILIA', luca: 'LUCA', familia: 'FAMILIA' };
+var WHO_CLR = { emilia: '#ffb3c6', luca: '#7bdff2', familia: '#96e6a0' };
+
+function pad(n) { return String(n).padStart(2, '0'); }
+function isoOf(dt) { return dt.getFullYear() + '-' + pad(dt.getMonth() + 1) + '-' + pad(dt.getDate()); }
+function parseISO(s) { var p = s.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+function mondayOf(dt) { var x = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate()); var dow = (x.getDay() + 6) % 7; x.setDate(x.getDate() - dow); return x; }
+function slug(s) { return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 48); }
+
+/* ---------- estado del usuario (persiste en el Portal) ---------- */
+var LS = 'semana-v1';
+var store = { done: {}, moves: {}, added: [], sel: null };
+try {
+  var raw = localStorage.getItem(LS);
+  if (raw) { var p = JSON.parse(raw); if (p && typeof p === 'object') { store.done = p.done || {}; store.moves = p.moves || {}; store.added = p.added || []; store.sel = p.sel || null; } }
+} catch (e) {}
+function persist() { try { localStorage.setItem(LS, JSON.stringify(store)); } catch (e) {} }
+
+/* ---------- ítems efectivos (base + cambios) ---------- */
+(function assignIds() {
+  var seen = {};
+  DATA.items.forEach(function (it) {
+    var base = it.w + '|' + it.d + '|' + slug(it.t);
+    seen[base] = (seen[base] || 0) + 1;
+    it.id = seen[base] > 1 ? base + '#' + seen[base] : base;
+  });
+})();
+function effItems() {
+  var out = [];
+  DATA.items.forEach(function (it) {
+    var d = store.moves[it.id] || it.d;
+    out.push({ id: it.id, d: d, w: it.w, i: it.i, s: it.s || '', t: it.t, u: it.u || '', own: false });
+  });
+  store.added.forEach(function (a) { out.push({ id: a.id, d: a.d, w: a.w, i: a.i, s: a.s || '', t: a.t, u: '', own: true }); });
+  return out;
 }
-clima();setInterval(clima,600000);
+function sortKey(it) {
+  var m = /^(\d{1,2}):(\d{2})/.exec(it.t);
+  return m ? (+m[1]) * 60 + (+m[2]) : -1;
+}
+function byDay(items) {
+  var map = {};
+  items.forEach(function (it) { (map[it.d] = map[it.d] || []).push(it); });
+  Object.keys(map).forEach(function (k) { map[k].sort(function (a, b) { return sortKey(a) - sortKey(b); }); });
+  return map;
+}
+
+/* ---------- vista ---------- */
+var weekOffset = 0;
+var pickId = null;
+var formOpen = false, formWho = 'familia', formIcon = 'note';
+
+function dispMonday() { var m = mondayOf(new Date()); m.setDate(m.getDate() + weekOffset * 7); return m; }
+function weekDays(mon) { var out = []; for (var i = 0; i < 7; i++) { var d = new Date(mon); d.setDate(mon.getDate() + i); out.push(d); } return out; }
+function selDay() { return store.sel || isoOf(new Date()); }
+
+function boxHTML(id, sz) {
+  var on = !!store.done[id];
+  return '<span class="box' + (on ? ' on' : '') + '"' + (sz ? ' style="width:' + sz + 'px;height:' + sz + 'px"' : '') + '>' + (on ? ic('check', sz ? 16 : 11) : '') + '</span>';
+}
+
+function render() {
+  var items = effItems();
+  var map = byDay(items);
+  var mon = dispMonday();
+  var days = weekDays(mon);
+  var todayISO = isoOf(new Date());
+  var sel = selDay();
+
+  var sun = days[6];
+  document.getElementById('wklabel').textContent = (mon.getMonth() === sun.getMonth())
+    ? 'Semana del ' + mon.getDate() + ' al ' + sun.getDate() + ' de ' + MON[mon.getMonth()]
+    : 'Semana del ' + mon.getDate() + ' de ' + MON[mon.getMonth()] + ' al ' + sun.getDate() + ' de ' + MON[sun.getMonth()];
+
+  var g = '';
+  days.forEach(function (dt) {
+    var iso = isoOf(dt);
+    g += '<div class="col' + (iso === todayISO ? ' today' : '') + (iso === sel ? ' sel' : '') + '" data-day="' + iso + '"><h3>' + DOWS[dt.getDay()] + '<b>' + dt.getDate() + '</b>' + (iso === todayISO ? '<span class="hoy">HOY</span>' : '') + '</h3>';
+    var list = map[iso] || [];
+    if (!list.length) g += '<div class="libre">Libre</div>';
+    list.forEach(function (it) {
+      var on = !!store.done[it.id];
+      if (it.w === 'emilia') {
+        g += '<div class="it emilia' + (on ? ' done' : '') + '"><span data-act="toggle" data-id="' + it.id + '">' + boxHTML(it.id) + '</span><span style="color:#ffb3c6">' + ic(it.i, 27) + '</span><span class="txt cap">' + (it.s || it.t) + '</span></div>';
+      } else {
+        g += '<div class="it ' + it.w + (on ? ' done' : '') + '"><span data-act="toggle" data-id="' + it.id + '">' + boxHTML(it.id) + '</span><span style="color:' + WHO_CLR[it.w] + '">' + ic(it.i, 15) + '</span><span class="txt">' + it.t + '</span></div>';
+      }
+    });
+    g += '</div>';
+  });
+  document.getElementById('grid').innerHTML = g;
+
+  /* drill-down del día elegido */
+  var sdt = parseISO(sel);
+  var h = '<h2>' + DOW[sdt.getDay()] + ' ' + sdt.getDate() + ' de ' + MON[sdt.getMonth()] + '<button class="add" data-act="add">+ Agregar</button></h2>';
+  var list = map[sel] || [];
+  if (!list.length) h += '<div class="libre" style="margin:12px 0 4px">Sin ítems — día libre</div>';
+  list.forEach(function (it) {
+    var on = !!store.done[it.id];
+    h += '<div class="row' + (on ? ' done' : '') + '"><span data-act="toggle" data-id="' + it.id + '" style="cursor:pointer">' + boxHTML(it.id, 27) + '</span>';
+    if (it.w === 'emilia') h += '<span style="color:#ffb3c6">' + ic(it.i, 42) + '</span>';
+    else h += '<span style="color:' + WHO_CLR[it.w] + '">' + ic(it.i, 26) + '</span>';
+    h += '<span class="txt">' + it.t + (it.u ? '<span class="sub">' + it.u + '</span>' : '') + '</span><span class="who ' + it.w + '">' + WHO_LBL[it.w] + '</span>';
+    h += '<button class="mv" data-act="pick" data-id="' + it.id + '">Mover</button>';
+    if (it.own) h += '<button class="del" data-act="del" data-id="' + it.id + '">✕</button>';
+    h += '</div>';
+    if (pickId === it.id) {
+      var mon2 = mondayOf(sdt);
+      h += '<div class="pick">';
+      weekDays(mon2).forEach(function (dt2) {
+        var iso2 = isoOf(dt2);
+        if (iso2 !== sel) h += '<span class="chip" data-act="move" data-id="' + it.id + '" data-to="' + iso2 + '">' + DOWS[dt2.getDay()] + ' ' + dt2.getDate() + '</span>';
+      });
+      h += '</div>';
+    }
+  });
+  if (formOpen) {
+    h += '<div class="form"><input type="text" id="f-text" placeholder="¿Qué hay que recordar?">';
+    h += '<div class="frow"><span class="lbl2">Para:</span>';
+    ['emilia', 'luca', 'familia'].forEach(function (w) {
+      h += '<span class="wchip' + (formWho === w ? ' on-' + w : '') + '" data-act="fwho" data-w="' + w + '">' + WHO_LBL[w] + '</span>';
+    });
+    h += '</div><div class="frow"><span class="lbl2">Dibujo:</span>';
+    Object.keys(ICONS).forEach(function (k) {
+      if (k === 'check') return;
+      h += '<span class="ichip' + (formIcon === k ? ' on' : '') + '" data-act="ficon" data-i="' + k + '">' + ic(k, 20) + '</span>';
+    });
+    h += '</div><div class="frow"><button class="add" data-act="save">Guardar</button><button class="mv" data-act="cancel">Cancelar</button></div></div>';
+  }
+  document.getElementById('dd').innerHTML = h;
+}
+
+/* ---------- acciones ---------- */
+document.addEventListener('click', function (ev) {
+  var el = ev.target;
+  while (el && !el.getAttribute('data-act') && !el.getAttribute('data-day')) el = el.parentElement;
+  if (!el) return;
+  var act = el.getAttribute('data-act');
+  var day = el.getAttribute('data-day');
+  if (day && !act) { store.sel = day; pickId = null; persist(); render(); return; }
+  if (!act) return;
+  var id = el.getAttribute('data-id');
+  if (act === 'toggle') {
+    if (store.done[id]) delete store.done[id]; else store.done[id] = true;
+    persist(); render();
+  } else if (act === 'pick') {
+    pickId = (pickId === id ? null : id); render();
+  } else if (act === 'move') {
+    var to = el.getAttribute('data-to');
+    var found = false;
+    for (var i = 0; i < store.added.length; i++) if (store.added[i].id === id) { store.added[i].d = to; found = true; }
+    if (!found) store.moves[id] = to;
+    store.sel = to; pickId = null; persist(); render();
+  } else if (act === 'del') {
+    store.added = store.added.filter(function (a) { return a.id !== id; });
+    delete store.done[id]; persist(); render();
+  } else if (act === 'add') {
+    formOpen = true; render();
+    var inp = document.getElementById('f-text'); if (inp) inp.focus();
+  } else if (act === 'cancel') {
+    formOpen = false; render();
+  } else if (act === 'fwho') {
+    formWho = el.getAttribute('data-w'); render();
+    var inp2 = document.getElementById('f-text'); if (inp2) inp2.focus();
+  } else if (act === 'ficon') {
+    formIcon = el.getAttribute('data-i'); render();
+  } else if (act === 'save') {
+    var inp3 = document.getElementById('f-text');
+    var txt = inp3 ? inp3.value.trim() : '';
+    if (txt) {
+      store.added.push({ id: 'u' + Date.now(), d: selDay(), w: formWho, i: formIcon, s: '', t: txt });
+      persist();
+    }
+    formOpen = false; render();
+  }
+});
+document.getElementById('prev').addEventListener('click', function () { weekOffset--; render(); });
+document.getElementById('next').addEventListener('click', function () { weekOffset++; render(); });
+
+/* ---------- encabezado: fecha, River, reloj, clima ---------- */
+(function head() {
+  var now = new Date();
+  document.getElementById('fecha').textContent = DOW[now.getDay()] + ' ' + now.getDate() + ' de ' + MON[now.getMonth()];
+  if (DATA.river) document.getElementById('river').innerHTML = 'River — Último: <b>' + DATA.river.last + '</b> · Próximo: <b>' + DATA.river.next + '</b>';
+})();
+function tick() { try { var d = new Date(); document.getElementById('reloj').textContent = pad(d.getHours()) + ':' + pad(d.getMinutes()); } catch (e) {} }
+tick(); setInterval(tick, 15000);
+function clima() {
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=43.45&longitude=-79.68&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=America%2FToronto&forecast_days=1')
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      var map = { 0: ['☀️', 'Despejado'], 1: ['🌤️', 'Mayormente despejado'], 2: ['⛅', 'Parcialmente nublado'], 3: ['☁️', 'Nublado'], 45: ['🌫️', 'Niebla'], 48: ['🌫️', 'Niebla'], 51: ['🌦️', 'Llovizna'], 53: ['🌦️', 'Llovizna'], 55: ['🌦️', 'Llovizna'], 61: ['🌧️', 'Lluvia'], 63: ['🌧️', 'Lluvia'], 65: ['🌧️', 'Lluvia fuerte'], 71: ['🌨️', 'Nieve'], 73: ['🌨️', 'Nieve'], 75: ['❄️', 'Nieve fuerte'], 80: ['🌦️', 'Chaparrones'], 81: ['🌦️', 'Chaparrones'], 82: ['🌧️', 'Chaparrones fuertes'], 95: ['⛈️', 'Tormenta'] };
+      var m = map[d.current.weather_code] || ['🌡️', ''];
+      document.getElementById('w-icon').textContent = m[0];
+      document.getElementById('w-temp').textContent = Math.round(d.current.temperature_2m) + '°C';
+      document.getElementById('w-desc').textContent = m[1];
+      document.getElementById('w-range').textContent = 'Máx ' + Math.round(d.daily.temperature_2m_max[0]) + '° · Mín ' + Math.round(d.daily.temperature_2m_min[0]) + '°';
+    })
+    .catch(function () { document.getElementById('w-desc').textContent = 'Sin datos'; });
+}
+clima(); setInterval(clima, 600000);
+
+/* ---------- auto-actualización cuando el cron publica datos nuevos ---------- */
+setInterval(function () {
+  fetch(location.href, { cache: 'no-store' }).then(function (r) { return r.text(); }).then(function (tx) {
+    var m = tx.match(/var GENERATED = "([^"]+)"/);
+    if (m && m[1] !== GENERATED) location.reload();
+  }).catch(function () {});
+}, 600000);
+
+if (!store.sel) { store.sel = isoOf(new Date()); persist(); }
+render();
 </script>
 </body>
 </html>
